@@ -19,7 +19,7 @@ struct
       val _ = Glfw.windowHint (Glfw.CONTEXT_VERSION_MAJOR (), 3)
       val _ = Glfw.windowHint (Glfw.DEPRECATED (), Glfw.FALSE ())
       val _ = Glfw.windowHint (Glfw.SAMPLES (), 4)
-      val window = Glfw.createWindow (500, 500, "SML test")
+      val window = Glfw.createWindow (500, 500, "MLton - Pong Wars")
       val _ = Glfw.makeContextCurrent window
       val _ = Gles3.loadGlad ()
     in
