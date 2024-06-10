@@ -15,6 +15,7 @@ struct
 
   fun main() =
     let
+      (* Set up GLFW. *)
       val _ = Glfw.init()
       val _ = Glfw.windowHint (Glfw.CONTEXT_VERSION_MAJOR (), 3)
       val _ = Glfw.windowHint (Glfw.DEPRECATED (), Glfw.FALSE ())
@@ -22,6 +23,7 @@ struct
       val window = Glfw.createWindow (500, 500, "MLton - Pong Wars")
       val _ = Glfw.makeContextCurrent window
       val _ = Gles3.loadGlad ()
+      (* Note: Create initial game state. *)
     in
       loop window
     end

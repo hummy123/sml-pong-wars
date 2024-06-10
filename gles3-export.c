@@ -7,6 +7,8 @@
 unsigned int VERTEX_SHADER = GL_VERTEX_SHADER;
 unsigned int FRAGMENT_SHADER = GL_FRAGMENT_SHADER;
 unsigned int TRIANGLES = GL_TRIANGLES;
+unsigned int STATIC_DRAW = GL_STATIC_DRAW;
+unsigned int DYNAMIC_DRAW = GL_DYNAMIC_DRAW;
 
 // OpenGL functions used below
 void loadGlad() {
@@ -35,8 +37,8 @@ void bindBuffer(unsigned int buffer) {
   glBindBuffer(GL_ARRAY_BUFFER, buffer);
 }
 
-void bufferData(float* vector, int vectorLength) {
-  glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vectorLength, vector, GL_DYNAMIC_DRAW);
+void bufferData(float* vector, int vectorLength, unsigned int updateMode) {
+  glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vectorLength, vector, updateMode);
 }
 
 unsigned int createShader(unsigned int shaderType) {

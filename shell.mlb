@@ -1,6 +1,8 @@
 $(SML_LIB)/basis/mlton.mlb
 $(SML_LIB)/basis/basis.mlb
 
+constants.sml
+
 ann
   "allowFFI true"
 in
@@ -13,5 +15,7 @@ ann
 in
   game-types.sml
 end
+
+game-update.sml
 
 shell.sml
