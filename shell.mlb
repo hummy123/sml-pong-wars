@@ -1,0 +1,11 @@
+$(SML_LIB)/basis/mlton.mlb
+$(SML_LIB)/basis/basis.mlb
+
+ann
+  "allowFFI true"
+in
+  gles3-import.sml
+  glfw-import.sml
+end
+
+shell.sml
