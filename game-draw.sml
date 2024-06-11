@@ -4,6 +4,16 @@ struct
 
   fun drawBlock (block: block) =
     let
+      val vertexBuffer = #vertexBuffer block
+      val _ = Gles3.bindBuffer vertexBuffer
+      val _ = Gles3.vertexAttribPointer (0, 2)
+      val _ = Gles3.enableVertexAttribArray 0
+
+      val fragmentBuffer = #fragmentBuffer block
+      val _ = Gles3.bindBuffer fragmentBuffer
+      val _ = Gles3.vertexAttribPointer (1, 3)
+      val _ = Gles3.enableVertexAttribArray 1
+
       val program = #program block
       val _ = Gles3.useProgram program
       val _ = Gles3.drawArrays (Gles3.TRIANGLES(), 0, 6)

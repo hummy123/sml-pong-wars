@@ -4,19 +4,19 @@ struct
 
   fun posToBoxVertexData (x, y) =
     let
-      val x = Real32.fromInt x
-      val y = Real32.fromInt y
+      val x = x - 5
+      val x = Real32.fromInt x / 5.0
+      val y = y - 5
+      val y = ~(Real32.fromInt y / 5.0)
     in
       #[
-         (* first triangle making up square *)
-         x / 500.0, y / 500.0,                          (* top left     *)
-         (x + 50.0) / 500.0, y / 500.0,                 (* top right    *)
-         x / 500.0, (y + 50.0) / 500.0,                 (* bottom left  *)
+          x, y, (* tl *)
+          x + 0.2, y, (* tr *)
+          x, y - 0.2, (* bl *) 
 
-         (* second triangle *)
-         x / 500.0, (y + 50.0) / 500.0,                 (* bottom left  *)
-         (x + 50.0) / 500.0, (y + 50.0) / 500.0,        (* bottom right *)
-         (x + 50.0) / 500.0, y / 500.0                  (* top right    *)
+          x, y - 0.2, (* bl *) 
+          x + 0.2, y, (* tr *)
+          x + 0.2, y - 0.2 (* br *) 
        ]
     end
 
@@ -80,7 +80,7 @@ struct
     let
       val block = if col < 5 then LIGHT else DARK
 
-      val vertexData = posToBoxVertexData (row * 50, col * 50)
+      val vertexData = posToBoxVertexData (row, col)
       val vertexBuffer = Gles3.createBuffer ()
       val _ = Gles3.bindBuffer vertexBuffer
       val _ =
@@ -129,8 +129,8 @@ struct
 
   (* Creates a 10x10 grid of blocks, with initial state. *)
   fun initBlocks (dayData, nightData) =
-    Vector.tabulate (10, fn colIdx =>
-      Vector.tabulate (10, fn rowIdx =>
+    Vector.tabulate (1, fn colIdx =>
+      Vector.tabulate (3, fn rowIdx =>
         initBlock (colIdx, rowIdx, dayData, nightData)))
 
   fun initBoard () =
