@@ -25,9 +25,10 @@ struct
   val createShader = _import "createShader" public: shader_type -> shader;
   val compileShader = _import "compileShader" public: shader -> unit;
   val deleteShader = _import "deleteShader" public: shader -> unit;
+  val shaderSource = _import "shaderSource" public: shader * string -> unit;
 
   val vertexAttribPointer = _import "vertexAttribPointer" public: int * int -> unit;
-  val enableVertexArray = _import "enableVertexArray" public: int -> unit;
+  val enableVertexAttribArray = _import "enableVertexAttribArray" public: int -> unit;
 
   val createProgram = _import "createProgram" public: unit -> program;
   val attachShader = _import "attachShader" public: program * shader -> unit;

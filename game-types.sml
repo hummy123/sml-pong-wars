@@ -111,47 +111,4 @@ struct
       dayFragmentData: Real32.real vector
     , nightFragmentData: Real32.real vector
     }
-
-  val dayFragmentData: Real32.real vector =
-    #[
-        217.0 / 255.0, 
-        233.0 / 255.0, 
-        227.0 / 255.0
-     ]
-
-  val nightFragmentData: Real32.real vector =
-    #[
-        17.0 / 255.0, 
-        77.0 / 255.0, 
-        91.0 / 255.0
-     ]
-
-     (*
-  fun initBlock (block, col, row) =
-    { block = block
-    , vertexData = posToBoxVertexData (row * 50, col * 50)
-    , changeColour = false
-    , vertexBuffer = NONE
-    , vertexShdaer = NONE
-    , program = NONE
-    }
-
-  (* Creates a 10x10 grid of blocks, with initial state. *)
-  fun initBlocks () =
-    Vector.tabulate (10, fn colIdx =>
-      Vector.tabulate (10, fn rowIdx =>
-        initBlock (if colIdx < 5 then LIGHT else DARK, colIdx, rowIdx)))
-
-  fun initBoard () =
-    { dayBall = initBall (DAY, 100, 200, 1, 1)
-    , nightBall = initBall (NIGHT, 100, 250, ~1, ~1)
-    , blocks = initBlocks ()
-    , dayFragmentData = dayFragmentData
-    , nightFragmentData = nightFragmentData
-    , dayBuffer = NONE
-    , nightBuffer = NONE
-    , dayShader = NONE
-    , nightShader = NONE
-    }
-    *)
 end

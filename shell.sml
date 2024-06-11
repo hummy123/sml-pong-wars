@@ -1,6 +1,6 @@
 structure Shell = 
 struct
-  fun loop window =
+  fun loop (window, game) =
     if not (Glfw.windowShouldClose window) then
       let
         val _ = Gles3.clearColor (0.1, 0.1, 0.1, 0.1)
@@ -8,7 +8,7 @@ struct
         val _ = Glfw.pollEvents ()
         val _ = Glfw.swapBuffers window
       in
-        loop window
+        loop (window, game)
       end
     else
       Glfw.terminate ()
@@ -24,8 +24,9 @@ struct
       val _ = Glfw.makeContextCurrent window
       val _ = Gles3.loadGlad ()
       (* Note: Create initial game state. *)
+      val game = GameInit.initBoard ()
     in
-      loop window
+      loop (window, game)
     end
 end
 

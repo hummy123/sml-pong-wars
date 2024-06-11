@@ -19,4 +19,18 @@ struct
     \{\n\
     \   FragColor = vec4(vcolour.x, vcolour.y, vcolour.z, 1.0f);\n\
     \}";
+
+  val initialDayFragmentData: Real32.real vector =
+    #[
+        217.0 / 255.0, 
+        233.0 / 255.0, 
+        227.0 / 255.0
+     ]
+
+  val initialNightFragmentData: Real32.real vector =
+    #[
+        17.0 / 255.0, 
+        77.0 / 255.0, 
+        91.0 / 255.0
+     ]
 end

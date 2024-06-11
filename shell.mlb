@@ -1,8 +1,6 @@
 $(SML_LIB)/basis/mlton.mlb
 $(SML_LIB)/basis/basis.mlb
 
-constants.sml
-
 ann
   "allowFFI true"
 in
@@ -13,9 +11,10 @@ end
 ann
   "allowVectorExps true"
 in
+  constants.sml
   game-types.sml
+  game-init.sml
 end
 
 game-update.sml
-
 shell.sml
