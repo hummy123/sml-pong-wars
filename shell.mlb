@@ -17,4 +17,5 @@ in
 end
 
 game-update.sml
+game-draw.sml
 shell.sml
