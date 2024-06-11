@@ -29,7 +29,7 @@ void clear() {
 
 unsigned int createBuffer() {
   unsigned int buffer;
-  glGenBuffers(GL_ARRAY_BUFFER, &buffer);
+  glGenBuffers(1, &buffer);
   return buffer;
 }
 
