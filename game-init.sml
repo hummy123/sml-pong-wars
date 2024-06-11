@@ -78,7 +78,7 @@ struct
 
   fun initBlock (col, row, dayData, nightData) =
     let
-      val block = if col < 5 then LIGHT else DARK
+      val block = if row < 5 then LIGHT else DARK
 
       val vertexData = posToBoxVertexData (row, col)
       val vertexBuffer = Gles3.createBuffer ()
@@ -129,8 +129,8 @@ struct
 
   (* Creates a 10x10 grid of blocks, with initial state. *)
   fun initBlocks (dayData, nightData) =
-    Vector.tabulate (1, fn colIdx =>
-      Vector.tabulate (3, fn rowIdx =>
+    Vector.tabulate (10, fn colIdx =>
+      Vector.tabulate (10, fn rowIdx =>
         initBlock (colIdx, rowIdx, dayData, nightData)))
 
   fun initBoard () =
