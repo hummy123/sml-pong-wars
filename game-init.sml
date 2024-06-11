@@ -11,12 +11,11 @@ struct
     in
       #[
           x, y, (* tl *)
-          x + 0.2, y, (* tr *)
-          x, y - 0.2, (* bl *) 
-
-          x, y - 0.2, (* bl *) 
-          x + 0.2, y, (* tr *)
-          x + 0.2, y - 0.2 (* br *) 
+          x, y, (* tr *)
+          x, y, (* bl *) 
+          x, y, (* tl *)
+          x, y, (* tr *)
+          x, y, (* bl *) 
        ]
     end
 
