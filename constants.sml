@@ -3,22 +3,27 @@ struct
   val boxVertexShaderString =
     "#version 300 es\n\
     \layout (location = 0) in vec2 apos;\n\
-    \layout (location = 1) in vec3 acol;\n\
-    \out vec3 vcolour;\n\
     \void main()\n\
     \{\n\
-    \   vcolour = acol;\n\
     \   gl_Position = vec4(apos.x, apos.y, 0.0f, 1.0f);\n\
     \}"
 
-  val boxFragmentShaderString =
+  val dayBoxFragmentShaderString =
     "#version 300 es\n\
     \precision mediump float;\n\
-    \in vec3 vcolour;\n\
     \out vec4 FragColor;\n\
     \void main()\n\
     \{\n\
-    \   FragColor = vec4(vcolour.x, vcolour.y, vcolour.z, 1.0f);\n\
+    \   FragColor = vec4(1.0f, 1.0f, 1.0f, 1.0f);\n\
+    \}";
+
+  val nightBoxFragmentShaderString =
+    "#version 300 es\n\
+    \precision mediump float;\n\
+    \out vec4 FragColor;\n\
+    \void main()\n\
+    \{\n\
+    \   FragColor = vec4(0.0f, 0.0f, 0.0f, 0.0f);\n\
     \}";
 
   val initialDayFragmentData: Real32.real vector =

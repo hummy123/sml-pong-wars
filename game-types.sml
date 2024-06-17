@@ -17,23 +17,30 @@ sig
     , program: Gles3.program
     }
 
-  type block =
-    { block: block_type
-    , vertexData: Real32.real vector
-    , vertexBuffer: Gles3.buffer
-    , vertexShdaer: Gles3.shader
-    , changedColour: bool
-    , fragmentBuffer: Gles3.buffer
-    , fragmentShader: Gles3.shader
-    , program: Gles3.program
-    }
+  type block = {block: block_type, vertexData: Real32.real vector}
 
   type game_board =
     { dayBall: ball
     , nightBall: ball
-    , blocks: block vector vector
-    , dayFragmentData: Real32.real vector
+    , (* Vector containing vectors of blocks. *)
+      blocks: block vector vector
+    , (* Reusable day/night fragment data; no need to reallocate. 
+       * This is stored in the game_board object and not as a global immutable
+       * variable because we may want allow changing the colour at some point. *)
+      dayFragmentData: Real32.real vector
     , nightFragmentData: Real32.real vector
+
+    , dayVertexBuffer: Gles3.buffer
+    , dayVertexShdaer: Gles3.shader
+    , dayFragmentBuffer: Gles3.buffer
+    , dayFragmentShader: Gles3.shader
+    , dayProgram: Gles3.program
+
+    , nightVertexBuffer: Gles3.buffer
+    , nightVertexShdaer: Gles3.shader
+    , nightFragmentBuffer: Gles3.buffer
+    , nightFragmentShader: Gles3.shader
+    , nightProgram: Gles3.program
     }
 end
 
@@ -52,8 +59,7 @@ struct
       (* How the ball is moving in a particular direction. *)
       xMove: int
     , yMove: int
-    ,
-      (* OpenGL types/data for ball. 
+    , (* OpenGL types/data for ball. 
        * Vertex data (position) is expected to be update many times 
        * and be reused many times.
        * times too. *)
@@ -62,42 +68,27 @@ struct
     , (** References/handles to data on GPU. **)
       vertexBuffer: Gles3.buffer
     , vertexShdaer: Gles3.shader
-    ,
-      (* fragmentData doesn't need to be defined here: it's always 
+    , (* fragmentData doesn't need to be defined here: it's always 
        * either the dayFragmentData in the game board or the nightFragmentData
        * in the game board. *)
       fragmentBuffer: Gles3.buffer
     , fragmentShader: Gles3.shader
-    ,
-      (** Handle to compiled program. *)
+    , (** Handle to compiled program. *)
       program: Gles3.program
     }
 
   type block =
     { block: block_type
-      (* row and column are implicitly implied
-       * by position in block vector vector. 
-        row: int,
-        column: int, 
-      
-        Outer vector indicates column number,
-        while inner vector indicates row number.
-      *)
-
-      (* OpenGL types/data for blocks.
-       * Vertex data (size/position) is expected to stay mostly the same, except
-       * when resizing if that is supported. *
-       * Fragment data (colour) is expected to change only rarely. *)
-    , vertexData: Real32.real vector
-    , vertexBuffer: Gles3.buffer
-    , vertexShdaer: Gles3.shader
+    (* block's position is implicitly implied
+     * by position in block vector vector. 
     
-      (* changedColour bool indicates if the block was inverted;
-       * if it was, need to uplodate new fragment data to CPU. *)
-    , changedColour: bool
-    , fragmentBuffer: Gles3.buffer
-    , fragmentShader: Gles3.shader
-    , program: Gles3.program
+      Outer vector indicates line/row number,
+      while inner vector indicates position of block in individual line/row.
+    *)
+
+    (* Vertex data (size/position) is expected to stay mostly the same, except
+     * when resizing if that is supported. *)
+    , vertexData: Real32.real vector
     }
 
   type game_board =
@@ -110,5 +101,17 @@ struct
        * variable because we may want allow changing the colour at some point. *)
       dayFragmentData: Real32.real vector
     , nightFragmentData: Real32.real vector
+
+    , dayVertexBuffer: Gles3.buffer
+    , dayVertexShdaer: Gles3.shader
+    , dayFragmentBuffer: Gles3.buffer
+    , dayFragmentShader: Gles3.shader
+    , dayProgram: Gles3.program
+
+    , nightVertexBuffer: Gles3.buffer
+    , nightVertexShdaer: Gles3.shader
+    , nightFragmentBuffer: Gles3.buffer
+    , nightFragmentShader: Gles3.shader
+    , nightProgram: Gles3.program
     }
 end
