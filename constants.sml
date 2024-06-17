@@ -8,35 +8,26 @@ struct
     \   gl_Position = vec4(apos.x, apos.y, 0.0f, 1.0f);\n\
     \}"
 
-  val dayBoxFragmentShaderString =
+  val boxFragmentShaderString =
     "#version 300 es\n\
     \precision mediump float;\n\
     \out vec4 FragColor;\n\
+    \uniform vec4 col;\n\
     \void main()\n\
     \{\n\
-    \   FragColor = vec4(1.0f, 1.0f, 1.0f, 1.0f);\n\
+    \   FragColor = col;\n\
     \}";
 
-  val nightBoxFragmentShaderString =
-    "#version 300 es\n\
-    \precision mediump float;\n\
-    \out vec4 FragColor;\n\
-    \void main()\n\
-    \{\n\
-    \   FragColor = vec4(0.0f, 0.0f, 0.0f, 0.0f);\n\
-    \}";
+  val initialDr: Real32.real = 217.0 / 255.0
+  val initialDg: Real32.real = 233.0 / 255.0
+  val initialDb: Real32.real = 227.0 / 255.0
 
-  val initialDayFragmentData: Real32.real vector =
-    #[
-        1.0, 
-        1.0,
-        1.0
-     ]
+  val initialDayFragmentData: Real32.real vector = #[1.0, 1.0, 1.0, 1.0]
+
+  val initialNr: Real32.real = 17.0 / 255.0
+  val initialNg: Real32.real = 77.0 / 255.0
+  val initialNb: Real32.real = 91.0 / 255.0
 
   val initialNightFragmentData: Real32.real vector =
-    #[
-        17.0 / 255.0, 
-        77.0 / 255.0, 
-        91.0 / 255.0
-     ]
+    #[17.0 / 255.0, 77.0 / 255.0, 91.0 / 255.0, 1.0]
 end

@@ -30,6 +30,16 @@ sig
       dayFragmentData: Real32.real vector
     , nightFragmentData: Real32.real vector
 
+    (* RGB values for day side. *)
+    , dr: Real32.real
+    , dg: Real32.real
+    , db: Real32.real
+
+    (* RGB values for night side. *)
+    , nr: Real32.real
+    , ng: Real32.real
+    , nb: Real32.real
+
     , dayVertexBuffer: Gles3.buffer
     , dayVertexShdaer: Gles3.shader
     , dayFragmentBuffer: Gles3.buffer
@@ -101,6 +111,14 @@ struct
        * variable because we may want allow changing the colour at some point. *)
       dayFragmentData: Real32.real vector
     , nightFragmentData: Real32.real vector
+
+    , dr: Real32.real
+    , dg: Real32.real
+    , db: Real32.real
+
+    , nr: Real32.real
+    , ng: Real32.real
+    , nb: Real32.real
 
     , dayVertexBuffer: Gles3.buffer
     , dayVertexShdaer: Gles3.shader

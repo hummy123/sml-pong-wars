@@ -43,11 +43,6 @@ struct
           DAY => nightData
         | NIGHT => dayData
 
-      val shaderString =
-        case player of
-          DAY => Constants.nightBoxFragmentShaderString
-        | NIGHT => Constants.dayBoxFragmentShaderString
-
       (* Initialise fragment buffer and shader. *)
       val fragmentBuffer = Gles3.createBuffer ()
       val _ = Gles3.bindBuffer fragmentBuffer
@@ -55,7 +50,8 @@ struct
         Gles3.bufferData
           (fragmentData, Vector.length fragmentData, Gles3.STATIC_DRAW ())
       val fragmentShader = Gles3.createShader (Gles3.FRAGMENT_SHADER ())
-      val _ = Gles3.shaderSource (fragmentShader, shaderString)
+      val _ = Gles3.shaderSource
+        (fragmentShader, Constants.boxFragmentShaderString)
       val _ = Gles3.compileShader fragmentShader
       val _ = Gles3.vertexAttribPointer (1, 3)
       val _ = Gles3.enableVertexAttribArray 1
@@ -99,25 +95,27 @@ struct
       (* Initialise vertex buffers and shaders. *)
       val dayVertexBuffer = Gles3.createBuffer ()
       val dayVertexShdaer = Gles3.createShader (Gles3.VERTEX_SHADER ())
-      val _ = Gles3.shaderSource (dayVertexShdaer, Constants.boxVertexShaderString)
+      val _ = Gles3.shaderSource
+        (dayVertexShdaer, Constants.boxVertexShaderString)
       val _ = Gles3.compileShader dayVertexShdaer
 
       val nightVertexBuffer = Gles3.createBuffer ()
       val nightVertexShdaer = Gles3.createShader (Gles3.VERTEX_SHADER ())
-      val _ = Gles3.shaderSource (nightVertexShdaer, Constants.boxVertexShaderString)
+      val _ = Gles3.shaderSource
+        (nightVertexShdaer, Constants.boxVertexShaderString)
       val _ = Gles3.compileShader nightVertexShdaer
 
       (* Initialise fragment buffer and shader. *)
       val dayFragmentBuffer = Gles3.createBuffer ()
       val dayFragmentShader = Gles3.createShader (Gles3.FRAGMENT_SHADER ())
       val _ = Gles3.shaderSource
-        (dayFragmentShader, Constants.dayBoxFragmentShaderString)
+        (dayFragmentShader, Constants.boxFragmentShaderString)
       val _ = Gles3.compileShader dayFragmentShader
 
       val nightFragmentBuffer = Gles3.createBuffer ()
       val nightFragmentShader = Gles3.createShader (Gles3.FRAGMENT_SHADER ())
       val _ = Gles3.shaderSource
-        (nightFragmentShader, Constants.nightBoxFragmentShaderString)
+        (nightFragmentShader, Constants.boxFragmentShaderString)
       val _ = Gles3.compileShader nightFragmentShader
 
       (* Create and compile programs. *)
@@ -151,6 +149,15 @@ struct
           )
       , blocks = initBlocks
           (Constants.initialDayFragmentData, Constants.initialNightFragmentData)
+
+      , dr = Constants.initialDr
+      , dg = Constants.initialDg
+      , db = Constants.initialDb
+
+      , nr = Constants.initialNr
+      , ng = Constants.initialNg
+      , nb = Constants.initialNb
+
       , dayFragmentData = Constants.initialDayFragmentData
       , nightFragmentData = Constants.initialNightFragmentData
 

@@ -65,7 +65,11 @@ struct
           (lightBlocks, Vector.length lightBlocks, Gles3.DYNAMIC_DRAW ())
       val _ = Gles3.vertexAttribPointer (0, 2)
       val _ = Gles3.enableVertexAttribArray 0
-      val _ = Gles3.useProgram (#dayProgram game)
+      val dayProgram = #dayProgram game
+      val dayUniformLocation = Gles3.getUniformLocation (dayProgram, "col")
+      val _ = Gles3.useProgram dayProgram
+      val _ = Gles3.uniform4f
+        (dayUniformLocation, #dr game, #dg game, #db game, 1.0)
       val _ = Gles3.drawArrays
         (Gles3.TRIANGLES (), 0, Vector.length lightBlocks div 2)
 
@@ -77,7 +81,11 @@ struct
           (darkBlocks, Vector.length lightBlocks, Gles3.DYNAMIC_DRAW ())
       val _ = Gles3.vertexAttribPointer (0, 2)
       val _ = Gles3.enableVertexAttribArray 0
+      val nightProgram = #nightProgram game
+      val nightUniformLocation = Gles3.getUniformLocation (nightProgram, "col")
       val _ = Gles3.useProgram (#nightProgram game)
+      val _ = Gles3.uniform4f
+        (nightUniformLocation, #nr game, #ng game, #nb game, 1.0)
       val _ = Gles3.drawArrays
         (Gles3.TRIANGLES (), 0, Vector.length darkBlocks div 2)
     in

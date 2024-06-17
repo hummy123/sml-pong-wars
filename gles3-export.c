@@ -88,3 +88,11 @@ void deleteProgram(unsigned int program) {
 void drawArrays(unsigned int drawMode, int startIndex, int numVertices) {
   glDrawArrays(drawMode, startIndex, numVertices);
 }
+
+int getUniformLocation(unsigned int program, const char *uniformName) {
+  glGetUniformLocation(program, uniformName);
+}
+
+void uniform4f(int uniformLocation, float a, float b, float c, float d) {
+  glUniform4f(uniformLocation, a, b, c, d);
+}
