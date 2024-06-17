@@ -11,27 +11,8 @@ struct
       | DARK => LIGHT
   in
     fun invertBlock (block: block) : block =
-      let
-        val
-          { block = oldBlockType
-          , changedColour = _
-          , vertexData
-          , vertexBuffer
-          , vertexShdaer
-          , fragmentBuffer
-          , fragmentShader
-          , program
-          } = block
-      in
-        { block = invertBlockType oldBlockType
-        , changedColour = true
-        , vertexData = vertexData
-        , vertexBuffer = vertexBuffer
-        , vertexShdaer = vertexShdaer
-        , fragmentBuffer = fragmentBuffer
-        , fragmentShader = fragmentShader
-        , program = program
-        }
+      let val {block = oldBlockType, vertexData} = block
+      in {block = invertBlockType oldBlockType, vertexData = vertexData}
       end
   end
 
@@ -195,5 +176,74 @@ struct
         NO_RESULT
   end
 
+  fun invertBlocks (blocks: block vector vector) =
+    Vector.mapi
+      (fn (idx, line) =>
+         if idx = 1 then
+           Vector.mapi
+             (fn (idx, block) => if idx = 7 then invertBlock block else block)
+             line
+         else
+           line) blocks
+
+  fun update (game: game_board) : game_board =
+    let
+      val
+        { dayBall
+        , nightBall
+        , blocks
+        , dayFragmentData
+        , nightFragmentData
+
+        , dr
+        , dg
+        , db
+
+        , nr
+        , ng
+        , nb
+
+        , dayVertexBuffer
+        , dayVertexShdaer
+        , dayFragmentBuffer
+        , dayFragmentShader
+        , dayProgram
+
+        , nightVertexBuffer
+        , nightVertexShdaer
+        , nightFragmentBuffer
+        , nightFragmentShader
+        , nightProgram
+        } = game
+
+      val blocks = invertBlocks (#blocks game)
+    in
+      { dayBall = dayBall
+      , nightBall = nightBall
+      , blocks = blocks
+      , dayFragmentData = dayFragmentData
+      , nightFragmentData = nightFragmentData
+
+      , dr = dr
+      , dg = dg
+      , db = db
+
+      , nr = nr
+      , ng = ng
+      , nb = nb
+
+      , dayVertexBuffer = dayVertexBuffer
+      , dayVertexShdaer = dayVertexShdaer
+      , dayFragmentBuffer = dayFragmentBuffer
+      , dayFragmentShader = dayFragmentShader
+      , dayProgram = dayProgram
+
+      , nightVertexBuffer = nightVertexBuffer
+      , nightVertexShdaer = nightVertexShdaer
+      , nightFragmentBuffer = nightFragmentBuffer
+      , nightFragmentShader = nightFragmentShader
+      , nightProgram = nightProgram
+      }
+    end
 
 end

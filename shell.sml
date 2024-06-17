@@ -5,6 +5,7 @@ struct
       let
         val _ = Gles3.clearColor (0.1, 0.1, 0.1, 0.1)
         val _ = Gles3.clear ()
+        val game = GameUpdate.update game
         val _ = GameDraw.draw game
         val _ = Glfw.pollEvents ()
         val _ = Glfw.swapBuffers window
