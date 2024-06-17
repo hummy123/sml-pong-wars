@@ -22,12 +22,7 @@ struct
   val initialDg: Real32.real = 233.0 / 255.0
   val initialDb: Real32.real = 227.0 / 255.0
 
-  val initialDayFragmentData: Real32.real vector = #[1.0, 1.0, 1.0, 1.0]
-
   val initialNr: Real32.real = 17.0 / 255.0
   val initialNg: Real32.real = 77.0 / 255.0
   val initialNb: Real32.real = 91.0 / 255.0
-
-  val initialNightFragmentData: Real32.real vector =
-    #[17.0 / 255.0, 77.0 / 255.0, 91.0 / 255.0, 1.0]
 end

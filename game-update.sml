@@ -192,8 +192,6 @@ struct
         { dayBall
         , nightBall
         , blocks
-        , dayFragmentData
-        , nightFragmentData
 
         , dr
         , dg
@@ -221,8 +219,6 @@ struct
       { dayBall = dayBall
       , nightBall = nightBall
       , blocks = blocks
-      , dayFragmentData = dayFragmentData
-      , nightFragmentData = nightFragmentData
 
       , dr = dr
       , dg = dg

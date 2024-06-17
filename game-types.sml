@@ -22,13 +22,8 @@ sig
   type game_board =
     { dayBall: ball
     , nightBall: ball
-    , (* Vector containing vectors of blocks. *)
-      blocks: block vector vector
-    , (* Reusable day/night fragment data; no need to reallocate. 
-       * This is stored in the game_board object and not as a global immutable
-       * variable because we may want allow changing the colour at some point. *)
-      dayFragmentData: Real32.real vector
-    , nightFragmentData: Real32.real vector
+    (* Vector containing vectors of blocks. *)
+    , blocks: block vector vector
 
     (* RGB values for day side. *)
     , dr: Real32.real
@@ -78,10 +73,7 @@ struct
     , (** References/handles to data on GPU. **)
       vertexBuffer: Gles3.buffer
     , vertexShdaer: Gles3.shader
-    , (* fragmentData doesn't need to be defined here: it's always 
-       * either the dayFragmentData in the game board or the nightFragmentData
-       * in the game board. *)
-      fragmentBuffer: Gles3.buffer
+    , fragmentBuffer: Gles3.buffer
     , fragmentShader: Gles3.shader
     , (** Handle to compiled program. *)
       program: Gles3.program
@@ -104,13 +96,7 @@ struct
   type game_board =
     { dayBall: ball
     , nightBall: ball
-    , (* Vector containing vectors of blocks. *)
-      blocks: block vector vector
-    , (* Reusable day/night fragment data; no need to reallocate. 
-       * This is stored in the game_board object and not as a global immutable
-       * variable because we may want allow changing the colour at some point. *)
-      dayFragmentData: Real32.real vector
-    , nightFragmentData: Real32.real vector
+    , (* Vector containing vectors of blocks. *) blocks: block vector vector
 
     , dr: Real32.real
     , dg: Real32.real
