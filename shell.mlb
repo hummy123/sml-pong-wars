@@ -16,6 +16,5 @@ in
   game-init.sml
 end
 
-game-update.sml
 game-draw.sml
 shell.sml
