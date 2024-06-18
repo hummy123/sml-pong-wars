@@ -97,7 +97,7 @@ struct
     fun hitLeftSideOfBlock (ball: ball, block: block) =
       let
         val newBlock = invertBlock block
-        val newBall = ballWithXMove (ball, 1)
+        val newBall = ballWithXMove (ball, ~5)
       in
         RESULT (newBall, newBlock)
       end
@@ -105,7 +105,7 @@ struct
     fun hitRightSideOfBLock (ball: ball, block: block) =
       let
         val newBlock = invertBlock block
-        val newBall = ballWithXMove (ball, 1)
+        val newBall = ballWithXMove (ball, 5)
       in
         RESULT (newBall, newBlock)
       end
@@ -113,7 +113,7 @@ struct
     fun hitTopSideOfBlock (ball: ball, block: block) =
       let
         val newBlock = invertBlock block
-        val newBall = ballWithYMove (ball, 1)
+        val newBall = ballWithYMove (ball, 5)
       in
         RESULT (newBall, newBlock)
       end
@@ -121,7 +121,7 @@ struct
     fun hitBottomSideOfBLock (ball: ball, block: block) =
       let
         val newBlock = invertBlock block
-        val newBall = ballWithYMove (ball, ~1)
+        val newBall = ballWithYMove (ball, ~5)
       in
         RESULT (newBall, newBlock)
       end
@@ -129,14 +129,10 @@ struct
     fun updateOnCollision (ball: ball, block: block, lineNum, rowIdx) =
       if areOnDifferentSides (ball, block) then
         case getCollisionSide (ball, block, lineNum, rowIdx) of
-          BALL_ON_LEFT_SIDE =>
-            (print "ball_on_left\n"; hitLeftSideOfBlock (ball, block))
-        | BALL_ON_TOP_SIDE =>
-            (print "ball_on_top\n"; hitTopSideOfBlock (ball, block))
-        | BALL_ON_RIGHT_SIDE =>
-            (print "ball_on_right\n"; hitRightSideOfBLock (ball, block))
-        | BALL_ON_BOTTOM_SIDE =>
-            (print "ball_on_bottom\n"; hitBottomSideOfBLock (ball, block))
+          BALL_ON_LEFT_SIDE => hitLeftSideOfBlock (ball, block)
+        | BALL_ON_TOP_SIDE => hitTopSideOfBlock (ball, block)
+        | BALL_ON_RIGHT_SIDE => hitRightSideOfBLock (ball, block)
+        | BALL_ON_BOTTOM_SIDE => hitBottomSideOfBLock (ball, block)
         | NO_COLLIDE => NO_RESULT
       else
         NO_RESULT
