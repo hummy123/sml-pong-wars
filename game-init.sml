@@ -4,19 +4,19 @@ struct
 
   fun posToBoxVertexData (x, y) =
     let
-      val x = x - 5
-      val x = Real32.fromInt x / 5.0
-      val y = y - 5
-      val y = ~(Real32.fromInt y / 5.0)
+      val x = x - 10
+      val x = Real32.fromInt x / 10.0
+      val y = y - 10
+      val y = ~(Real32.fromInt y / 10.0)
     in
       #[
           x, y, (* tl *)
-          x + 0.2, y, (* tr *)
-          x, y - 0.2, (* bl *) 
+          x + 0.1, y, (* tr *)
+          x, y - 0.1, (* bl *) 
 
-          x, y - 0.2, (* bl *) 
-          x + 0.2, y, (* tr *)
-          x + 0.2, y - 0.2 (* br *) 
+          x, y - 0.1, (* bl *) 
+          x + 0.1, y, (* tr *)
+          x + 0.1, y - 0.1 (* br *) 
        ]
     end
 
@@ -67,7 +67,7 @@ struct
 
   fun initBlock (curLine, positionInRow) : block =
     let
-      val block = if positionInRow < 5 then LIGHT else DARK
+      val block = if positionInRow < 10 then LIGHT else DARK
       val vertexData = posToBoxVertexData (positionInRow, curLine)
     in
       {block = block, vertexData = vertexData}
@@ -75,8 +75,8 @@ struct
 
   (* Creates a 10x10 grid of blocks, with initial state. *)
   fun initBlocks () =
-    Vector.tabulate (10, fn lineNum =>
-      Vector.tabulate (10, fn positionInRow =>
+    Vector.tabulate (20, fn lineNum =>
+      Vector.tabulate (20, fn positionInRow =>
         initBlock (lineNum, positionInRow)))
 
   fun initBoard () =
