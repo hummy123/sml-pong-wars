@@ -50,10 +50,10 @@ struct
   datatype collision_result = RESULT of ball * block | NO_RESULT
 
   local
-    fun help (min, pos, max) = pos > min orelse pos < max
+    fun help (min, pos, max) = pos > min andalso pos < max
   in
     fun isBetween (min, pos1, pos2, max) =
-      help (min, pos1, max) andalso help (min, pos2, max)
+      help (min, pos1, max) orelse help (min, pos2, max)
   end
 
   fun areOnDifferentSides (ball, block) =
@@ -96,7 +96,7 @@ struct
     fun hitLeftSideOfBlock (ball: ball, block: block) =
       let
         val newBlock = invertBlock block
-        val newBall = ballWithXMove (ball, ~(#xMove ball))
+        val newBall = ballWithXMove (ball, ~1)
       in
         RESULT (newBall, newBlock)
       end
@@ -104,7 +104,7 @@ struct
     fun hitRightSideOfBLock (ball: ball, block: block) =
       let
         val newBlock = invertBlock block
-        val newBall = ballWithXMove (ball, ~(#xMove ball))
+        val newBall = ballWithXMove (ball, 1)
       in
         RESULT (newBall, newBlock)
       end
@@ -112,7 +112,7 @@ struct
     fun hitTopSideOfBlock (ball: ball, block: block) =
       let
         val newBlock = invertBlock block
-        val newBall = ballWithYMove (ball, ~(#yMove ball))
+        val newBall = ballWithYMove (ball, 1)
       in
         RESULT (newBall, newBlock)
       end
@@ -120,7 +120,7 @@ struct
     fun hitBottomSideOfBLock (ball: ball, block: block) =
       let
         val newBlock = invertBlock block
-        val newBall = ballWithYMove (ball, ~(#yMove ball))
+        val newBall = ballWithYMove (ball, ~1)
       in
         RESULT (newBall, newBlock)
       end
