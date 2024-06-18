@@ -149,6 +149,15 @@ struct
          else
            line) blocks
 
+  fun updateBall (ball: ball) : ball =
+    let
+      val {player, xPos, yPos, xMove, yMove} = ball
+      val xPos = xPos + xMove
+      val yPos = yPos + yMove
+    in
+      {player = player, xPos = xPos, yPos = yPos, xMove = xMove, yMove = yMove}
+    end
+
   fun update (game: game_board) : game_board =
     let
       val
@@ -183,7 +192,8 @@ struct
         , ballProgram
         } = game
 
-      val blocks = invertBlocks blocks
+      val dayBall = updateBall dayBall
+      val nightBall = updateBall nightBall
     in
       { dayBall = dayBall
       , nightBall = nightBall

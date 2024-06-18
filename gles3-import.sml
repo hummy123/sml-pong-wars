@@ -14,6 +14,8 @@ struct
     _symbol "FRAGMENT_SHADER" public : ( unit -> shader_type ) * ( shader_type -> unit );
   val (TRIANGLES, _) =
     _symbol "TRIANGLES" public : ( unit -> draw_mode ) * ( draw_mode -> unit );
+  val (TRIANGLE_FAN, _) =
+    _symbol "TRIANGLE_FAN" public : ( unit -> draw_mode ) * ( draw_mode -> unit );
   val (STATIC_DRAW, _) =
     _symbol "STATIC_DRAW" public : ( unit -> update_mode ) * ( update_mode -> unit );
   val (DYNAMIC_DRAW, _) =

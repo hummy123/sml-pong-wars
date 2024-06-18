@@ -92,5 +92,71 @@ struct
       ()
     end
 
-  fun draw (game: game_board) = drawBlocks game
+  local
+    fun ballToVertexData ({xPos, yPos, ...}: ball) : Real32.real vector =
+      let
+        val left = Real32.fromInt xPos / 500.0
+        val right = left + 0.1
+        val top = Real32.fromInt yPos / 500.0
+        val bottom = top - 0.1
+      in
+        #[
+          right, bottom, (* bottom right *)
+          right, top, (* top right *)
+          left, top, (* top left *)
+          left, bottom (* bottom left *)
+        ]
+      end
+  in
+    fun drawBalls (game: game_board) =
+      let
+        val
+          { dayBall
+          , nightBall
+          , ballVertexBuffer
+          , ballVertexShader
+          , ballFragmentBuffer
+          , ballFragmentShader
+          , ballProgram
+          , dr
+          , dg
+          , db
+          , nr
+          , ng
+          , nb
+          , ...
+          } = game
+
+        val dayVertexData = ballToVertexData dayBall
+        val nightVertexData = ballToVertexData nightBall
+
+        (* Drawing code. *)
+        val _ = Gles3.bindBuffer ballVertexBuffer
+        val _ =
+          Gles3.bufferData
+            (dayVertexData, Vector.length dayVertexData, Gles3.DYNAMIC_DRAW ())
+        val _ = Gles3.vertexAttribPointer (0, 2)
+        val _ = Gles3.enableVertexAttribArray 0
+        val ballUniformLocation = Gles3.getUniformLocation (ballProgram, "col")
+        val _ = Gles3.useProgram ballProgram
+        val _ = Gles3.uniform4f (ballUniformLocation, nr, ng, nb, 1.0)
+        val _ = Gles3.drawArrays
+          (Gles3.TRIANGLE_FAN (), 0, Vector.length dayVertexData div 2)
+
+        val _ =
+          Gles3.bufferData
+            ( nightVertexData
+            , Vector.length dayVertexData
+            , Gles3.DYNAMIC_DRAW ()
+            )
+        val _ = Gles3.uniform4f (ballUniformLocation, dr, dg, db, 1.0)
+        val _ = Gles3.drawArrays
+          (Gles3.TRIANGLE_FAN (), 0, Vector.length nightVertexData div 2)
+      in
+        ()
+      end
+  end
+
+  fun draw (game: game_board) =
+    (drawBlocks game; drawBalls game)
 end

@@ -14,8 +14,8 @@ in
   constants.sml
   game-types.sml
   game-init.sml
+  game-draw.sml
 end
 
-game-draw.sml
 game-update.sml
 shell.sml
