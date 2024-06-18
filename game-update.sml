@@ -50,7 +50,7 @@ struct
   datatype collision_result = RESULT of ball * block | NO_RESULT
 
   local
-    fun help (min, pos, max) = pos > min andalso pos < max
+    fun help (min, pos, max) = pos >= min andalso pos <= max
   in
     fun isBetween (min, pos1, pos2, max) =
       help (min, pos1, max) orelse help (min, pos2, max)
@@ -73,13 +73,14 @@ struct
 
         val blockStartX = (rowIdx - 10) * 50
         val blockEndX = blockStartX + 50
-        val blockStartY = (lineNum - 10) * 50
+        val blockStartY = (~(lineNum - 10)) * 50
         val blockEndY = blockStartY + 50
 
         val isInHorizontalRange =
           isBetween (blockStartX, ballStartX, ballEndX, blockEndX)
 
-        val isInVerticalRange = isBetween (blockStartY, ballStartY, ballEndY, blockEndY)
+        val isInVerticalRange =
+          isBetween (blockStartY, ballStartY, ballEndY, blockEndY)
       in
         if ballEndX = blockStartX andalso isInVerticalRange then
           BALL_ON_LEFT_SIDE
@@ -96,7 +97,7 @@ struct
     fun hitLeftSideOfBlock (ball: ball, block: block) =
       let
         val newBlock = invertBlock block
-        val newBall = ballWithXMove (ball, ~1)
+        val newBall = ballWithXMove (ball, 1)
       in
         RESULT (newBall, newBlock)
       end
