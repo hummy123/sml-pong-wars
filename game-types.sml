@@ -4,18 +4,7 @@ sig
   datatype block_type = LIGHT | DARK
 
   type ball =
-    { player: player_type
-    , xPos: int
-    , yPos: int
-    , xMove: int
-    , yMove: int
-    , vertexData: Real32.real vector
-    , vertexBuffer: Gles3.buffer
-    , vertexShdaer: Gles3.shader
-    , fragmentBuffer: Gles3.buffer
-    , fragmentShader: Gles3.shader
-    , program: Gles3.program
-    }
+    {player: player_type, xPos: int, yPos: int, xMove: int, yMove: int}
 
   type block = {block: block_type, vertexData: Real32.real vector}
 
@@ -36,16 +25,22 @@ sig
     , nb: Real32.real
 
     , dayVertexBuffer: Gles3.buffer
-    , dayVertexShdaer: Gles3.shader
+    , dayVertexShader: Gles3.shader
     , dayFragmentBuffer: Gles3.buffer
     , dayFragmentShader: Gles3.shader
     , dayProgram: Gles3.program
 
     , nightVertexBuffer: Gles3.buffer
-    , nightVertexShdaer: Gles3.shader
+    , nightVertexShader: Gles3.shader
     , nightFragmentBuffer: Gles3.buffer
     , nightFragmentShader: Gles3.shader
     , nightProgram: Gles3.program
+
+    , ballVertexBuffer: Gles3.buffer
+    , ballVertexShader: Gles3.shader
+    , ballFragmentBuffer: Gles3.buffer
+    , ballFragmentShader: Gles3.shader
+    , ballProgram: Gles3.program
     }
 end
 
@@ -56,27 +51,14 @@ struct
 
   type ball =
     { player: player_type
+    (* top left x coordinate *)
     , xPos: int
-    , (* top left x coordinate *)
-      yPos: int
-    , (* top right y coordinate *)
+    (* top left y coordinate *)
+    , yPos: int
 
-      (* How the ball is moving in a particular direction. *)
-      xMove: int
+    (* How the ball is moving in a particular direction. *)
+    , xMove: int
     , yMove: int
-    , (* OpenGL types/data for ball. 
-       * Vertex data (position) is expected to be update many times 
-       * and be reused many times.
-       * times too. *)
-      (** Data that is/should be uploaded to the GPU. *)
-      vertexData: Real32.real vector
-    , (** References/handles to data on GPU. **)
-      vertexBuffer: Gles3.buffer
-    , vertexShdaer: Gles3.shader
-    , fragmentBuffer: Gles3.buffer
-    , fragmentShader: Gles3.shader
-    , (** Handle to compiled program. *)
-      program: Gles3.program
     }
 
   type block =
@@ -96,7 +78,8 @@ struct
   type game_board =
     { dayBall: ball
     , nightBall: ball
-    , (* Vector containing vectors of blocks. *) blocks: block vector vector
+    (* Vector containing vectors of blocks. *)
+    , blocks: block vector vector
 
     , dr: Real32.real
     , dg: Real32.real
@@ -107,15 +90,21 @@ struct
     , nb: Real32.real
 
     , dayVertexBuffer: Gles3.buffer
-    , dayVertexShdaer: Gles3.shader
+    , dayVertexShader: Gles3.shader
     , dayFragmentBuffer: Gles3.buffer
     , dayFragmentShader: Gles3.shader
     , dayProgram: Gles3.program
 
     , nightVertexBuffer: Gles3.buffer
-    , nightVertexShdaer: Gles3.shader
+    , nightVertexShader: Gles3.shader
     , nightFragmentBuffer: Gles3.buffer
     , nightFragmentShader: Gles3.shader
     , nightProgram: Gles3.program
+
+    , ballVertexBuffer: Gles3.buffer
+    , ballVertexShader: Gles3.shader
+    , ballFragmentBuffer: Gles3.buffer
+    , ballFragmentShader: Gles3.shader
+    , ballProgram: Gles3.program
     }
 end

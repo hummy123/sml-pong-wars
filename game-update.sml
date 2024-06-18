@@ -16,64 +16,27 @@ struct
       end
   end
 
-  fun ballWithXMove (ball: ball, newXMove) =
+  fun ballWithXMove (ball: ball, newXMove) : ball =
     let
-      val
-        { player
-        , xPos
-        , yPos
-        , xMove = _
-        , yMove
-        , vertexData
-        , vertexBuffer
-        , vertexShdaer
-        , fragmentBuffer
-        , fragmentShader
-        , program
-        } = ball
+      val {player, xPos, yPos, xMove = _, yMove} = ball
     in
       { xMove = newXMove
       , player = player
       , xPos = xPos
       , yPos = yPos
       , yMove = yMove
-      , vertexData = vertexData
-      , vertexBuffer = vertexBuffer
-      , vertexShdaer = vertexShdaer
-      , fragmentBuffer = fragmentBuffer
-      , fragmentShader = fragmentShader
-      , program = program
       }
     end
 
   fun ballWithYMove (ball: ball, newYMove) =
     let
-
-      val
-        { player
-        , xPos
-        , yPos
-        , xMove
-        , yMove = _
-        , vertexData
-        , vertexBuffer
-        , vertexShdaer
-        , fragmentBuffer
-        , fragmentShader
-        , program
-        } = ball
+      val {player, xPos, yPos, xMove, yMove = _} = ball
     in
       { yMove = newYMove
       , player = player
       , xPos = xPos
       , yPos = yPos
       , xMove = xMove
-      , vertexData = vertexData
-      , vertexBuffer = vertexBuffer
-      , vertexShdaer = vertexShdaer
-      , fragmentBuffer = fragmentBuffer
-      , fragmentShader = fragmentShader
-      , program = program
       }
     end
 
@@ -202,19 +165,25 @@ struct
         , nb
 
         , dayVertexBuffer
-        , dayVertexShdaer
+        , dayVertexShader
         , dayFragmentBuffer
         , dayFragmentShader
         , dayProgram
 
         , nightVertexBuffer
-        , nightVertexShdaer
+        , nightVertexShader
         , nightFragmentBuffer
         , nightFragmentShader
         , nightProgram
+
+        , ballVertexBuffer
+        , ballVertexShader
+        , ballFragmentBuffer
+        , ballFragmentShader
+        , ballProgram
         } = game
 
-      val blocks = invertBlocks (#blocks game)
+      val blocks = invertBlocks blocks
     in
       { dayBall = dayBall
       , nightBall = nightBall
@@ -229,16 +198,22 @@ struct
       , nb = nb
 
       , dayVertexBuffer = dayVertexBuffer
-      , dayVertexShdaer = dayVertexShdaer
+      , dayVertexShader = dayVertexShader
       , dayFragmentBuffer = dayFragmentBuffer
       , dayFragmentShader = dayFragmentShader
       , dayProgram = dayProgram
 
       , nightVertexBuffer = nightVertexBuffer
-      , nightVertexShdaer = nightVertexShdaer
+      , nightVertexShader = nightVertexShader
       , nightFragmentBuffer = nightFragmentBuffer
       , nightFragmentShader = nightFragmentShader
       , nightProgram = nightProgram
+
+      , ballVertexBuffer = ballVertexBuffer
+      , ballVertexShader = ballVertexShader
+      , ballFragmentBuffer = ballFragmentBuffer
+      , ballFragmentShader = ballFragmentShader
+      , ballProgram = ballProgram
       }
     end
 

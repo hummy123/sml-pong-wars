@@ -21,49 +21,7 @@ struct
     end
 
   fun initBall (player, xPos, yPos, xMove, yMove) : ball =
-    let
-      (* Initialise vertex buffer and shader. *)
-      val vertexData = posToBoxVertexData (xPos, yPos)
-      val vertexBuffer = Gles3.createBuffer ()
-      val _ = Gles3.bindBuffer vertexBuffer
-      val _ =
-        Gles3.bufferData
-          (vertexData, Vector.length vertexData, Gles3.DYNAMIC_DRAW ())
-      val vertexShdaer = Gles3.createShader (Gles3.VERTEX_SHADER ())
-      val _ = Gles3.shaderSource (vertexShdaer, Constants.boxVertexShaderString)
-      val _ = Gles3.compileShader vertexShdaer
-      val _ = Gles3.vertexAttribPointer (0, 2)
-      val _ = Gles3.enableVertexAttribArray 0
-
-      (* Initialise fragment buffer and shader. *)
-      val fragmentBuffer = Gles3.createBuffer ()
-      val _ = Gles3.bindBuffer fragmentBuffer
-      val fragmentShader = Gles3.createShader (Gles3.FRAGMENT_SHADER ())
-      val _ = Gles3.shaderSource
-        (fragmentShader, Constants.boxFragmentShaderString)
-      val _ = Gles3.compileShader fragmentShader
-      val _ = Gles3.vertexAttribPointer (1, 3)
-      val _ = Gles3.enableVertexAttribArray 1
-
-      (* Create and compile program. *)
-      val program = Gles3.createProgram ()
-      val _ = Gles3.attachShader (program, vertexShdaer)
-      val _ = Gles3.attachShader (program, fragmentShader)
-      val _ = Gles3.linkProgram program
-    in
-      { player = player
-      , xPos = xPos
-      , yPos = yPos
-      , xMove = xMove
-      , yMove = yMove
-      , vertexData = vertexData
-      , vertexBuffer = vertexBuffer
-      , vertexShdaer = vertexShdaer
-      , fragmentBuffer = fragmentBuffer
-      , fragmentShader = fragmentShader
-      , program = program
-      }
-    end
+    {player = player, xPos = xPos, yPos = yPos, xMove = xMove, yMove = yMove}
 
   fun initBlock (curLine, positionInRow) : block =
     let
@@ -74,25 +32,31 @@ struct
     end
 
   (* Creates a 10x10 grid of blocks, with initial state. *)
-  fun initBlocks () =
+  fun initBlocks () : block vector vector =
     Vector.tabulate (20, fn lineNum =>
       Vector.tabulate (20, fn positionInRow =>
         initBlock (lineNum, positionInRow)))
 
-  fun initBoard () =
+  fun initBoard () : game_board =
     let
       (* Initialise vertex buffers and shaders. *)
       val dayVertexBuffer = Gles3.createBuffer ()
-      val dayVertexShdaer = Gles3.createShader (Gles3.VERTEX_SHADER ())
+      val dayVertexShader = Gles3.createShader (Gles3.VERTEX_SHADER ())
       val _ = Gles3.shaderSource
-        (dayVertexShdaer, Constants.boxVertexShaderString)
-      val _ = Gles3.compileShader dayVertexShdaer
+        (dayVertexShader, Constants.boxVertexShaderString)
+      val _ = Gles3.compileShader dayVertexShader
 
       val nightVertexBuffer = Gles3.createBuffer ()
-      val nightVertexShdaer = Gles3.createShader (Gles3.VERTEX_SHADER ())
+      val nightVertexShader = Gles3.createShader (Gles3.VERTEX_SHADER ())
       val _ = Gles3.shaderSource
-        (nightVertexShdaer, Constants.boxVertexShaderString)
-      val _ = Gles3.compileShader nightVertexShdaer
+        (nightVertexShader, Constants.boxVertexShaderString)
+      val _ = Gles3.compileShader nightVertexShader
+
+      val ballVertexBuffer = Gles3.createBuffer ()
+      val ballVertexShader = Gles3.createShader (Gles3.VERTEX_SHADER ())
+      val _ = Gles3.shaderSource
+        (ballVertexShader, Constants.boxVertexShaderString)
+      val _ = Gles3.compileShader ballVertexShader
 
       (* Initialise fragment buffer and shader. *)
       val dayFragmentBuffer = Gles3.createBuffer ()
@@ -107,31 +71,30 @@ struct
         (nightFragmentShader, Constants.boxFragmentShaderString)
       val _ = Gles3.compileShader nightFragmentShader
 
+      val ballFragmentBuffer = Gles3.createBuffer ()
+      val ballFragmentShader = Gles3.createShader (Gles3.FRAGMENT_SHADER ())
+      val _ = Gles3.shaderSource
+        (ballFragmentShader, Constants.boxFragmentShaderString)
+      val _ = Gles3.compileShader ballFragmentShader
+
       (* Create and compile programs. *)
       val dayProgram = Gles3.createProgram ()
-      val _ = Gles3.attachShader (dayProgram, dayVertexShdaer)
+      val _ = Gles3.attachShader (dayProgram, dayVertexShader)
       val _ = Gles3.attachShader (dayProgram, dayFragmentShader)
       val _ = Gles3.linkProgram dayProgram
 
       val nightProgram = Gles3.createProgram ()
-      val _ = Gles3.attachShader (nightProgram, nightVertexShdaer)
+      val _ = Gles3.attachShader (nightProgram, nightVertexShader)
       val _ = Gles3.attachShader (nightProgram, nightFragmentShader)
       val _ = Gles3.linkProgram nightProgram
+
+      val ballProgram = Gles3.createProgram ()
+      val _ = Gles3.attachShader (ballProgram, ballVertexShader)
+      val _ = Gles3.attachShader (ballProgram, ballFragmentShader)
+      val _ = Gles3.linkProgram ballProgram
     in
-      { dayBall = initBall
-          ( DAY
-          , 100
-          , 200
-          , 1
-          , 1
-          )
-      , nightBall = initBall
-          ( NIGHT
-          , 100
-          , 250
-          , ~1
-          , ~1
-          )
+      { dayBall = initBall (DAY, 100, 200, 1, 1)
+      , nightBall = initBall (NIGHT, 100, 250, ~1, ~1)
       , blocks = initBlocks ()
 
       , dr = Constants.initialDr
@@ -144,16 +107,22 @@ struct
 
       (* OpenGL buffers/shaders/programs below. *)
       , dayVertexBuffer = dayVertexBuffer
-      , dayVertexShdaer = dayVertexShdaer
+      , dayVertexShader = dayVertexShader
       , dayFragmentBuffer = dayFragmentBuffer
       , dayFragmentShader = dayFragmentShader
       , dayProgram = dayProgram
 
       , nightVertexBuffer = nightVertexBuffer
-      , nightVertexShdaer = nightVertexShdaer
+      , nightVertexShader = nightVertexShader
       , nightFragmentBuffer = nightFragmentBuffer
       , nightFragmentShader = nightFragmentShader
       , nightProgram = nightProgram
+
+      , ballVertexBuffer = ballVertexBuffer
+      , ballVertexShader = ballVertexShader
+      , ballFragmentBuffer = ballFragmentBuffer
+      , ballFragmentShader = ballFragmentShader
+      , ballProgram = ballProgram
       }
     end
 end

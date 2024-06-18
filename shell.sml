@@ -1,6 +1,8 @@
-structure Shell = 
+structure Shell =
 struct
-  fun loop (window, game) =
+  open GameTypes
+
+  fun loop (window, game: game_board) =
     if not (Glfw.windowShouldClose window) then
       let
         val _ = Gles3.clearColor (0.1, 0.1, 0.1, 0.1)
@@ -15,10 +17,10 @@ struct
     else
       Glfw.terminate ()
 
-  fun main() =
+  fun main () =
     let
       (* Set up GLFW. *)
-      val _ = Glfw.init()
+      val _ = Glfw.init ()
       val _ = Glfw.windowHint (Glfw.CONTEXT_VERSION_MAJOR (), 3)
       val _ = Glfw.windowHint (Glfw.DEPRECATED (), Glfw.FALSE ())
       val _ = Glfw.windowHint (Glfw.SAMPLES (), 4)
