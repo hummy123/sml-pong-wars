@@ -93,8 +93,8 @@ struct
       val _ = Gles3.attachShader (ballProgram, ballFragmentShader)
       val _ = Gles3.linkProgram ballProgram
     in
-      { dayBall = initBall (DAY, ~275, 25, 9, 9)
-      , nightBall = initBall (NIGHT, 275, 25, ~9, ~9)
+      { dayBall = initBall (DAY, ~275, 25, 1, 0)
+      , nightBall = initBall (NIGHT, 275, 25, 0, 0)
       , blocks = initBlocks ()
 
       , dr = Constants.initialDr
