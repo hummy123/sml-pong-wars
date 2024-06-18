@@ -94,7 +94,7 @@ struct
       val _ = Gles3.linkProgram ballProgram
     in
       { dayBall = initBall (DAY, ~275, 25, 5, ~5)
-      , nightBall = initBall (NIGHT, 275, 25, ~5, 5)
+      , nightBall = initBall (NIGHT, 225, 25, ~5, 5)
       , blocks = initBlocks ()
 
       , dr = Constants.initialDr
