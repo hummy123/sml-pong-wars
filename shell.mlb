@@ -8,11 +8,12 @@ in
   glfw-import.sml
 end
 
+constants.sml
+game-types.sml
+
 ann
   "allowVectorExps true"
 in
-  constants.sml
-  game-types.sml
   game-init.sml
   game-draw.sml
 end
