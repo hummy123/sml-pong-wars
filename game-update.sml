@@ -189,6 +189,27 @@ struct
         (Vector.length blocks - 1, blocks, dayBall, nightBall, [])
   end
 
+  fun checkLeftWallCollision (ball: ball) =
+    if #xPos ball = ~500 then ballWithXMove (ball, 5) else ball
+
+  fun checkTopWallCollision (ball: ball) =
+    if #yPos ball = 500 then ballWithYMove (ball, ~5) else ball
+
+  fun checkRightWallCollision (ball: ball) =
+    if #xPos ball + 50 = 500 then ballWithXMove (ball, ~5) else ball
+
+  fun checkBottomWallCollision (ball: ball) =
+    if #yPos ball - 50 = ~500 then ballWithYMove (ball, 5) else ball
+
+  fun checkWallCollisions (ball: ball) =
+    let
+      val ball = checkLeftWallCollision ball
+      val ball = checkRightWallCollision ball
+      val ball = checkTopWallCollision ball
+    in
+      checkBottomWallCollision ball
+    end
+
   fun updateBall (ball: ball) : ball =
     let
       val {player, xPos, yPos, xMove, yMove} = ball
@@ -236,6 +257,9 @@ struct
       val nightBall = updateBall nightBall
       val (dayBall, nightBall, blocks) =
         updateBlocks (blocks, dayBall, nightBall)
+
+      val dayBall = checkWallCollisions dayBall
+      val nightBall = checkWallCollisions nightBall
     in
       { dayBall = dayBall
       , nightBall = nightBall
@@ -268,5 +292,4 @@ struct
       , ballProgram = ballProgram
       }
     end
-
 end
