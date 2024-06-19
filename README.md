@@ -43,7 +43,13 @@ Since I don't know and can't test, I would suggest anyone interested uses the Wi
 
 There are some reasons a minimal amount of code will need to be written in order to run using a different Standard ML compiler.
 
-First, there are FFI bindings to a very small subset of GLFW (in `glfw-import.sml`) and OpenGL 3 (in `gles3-import.sml`). Since there's no standardised FFI across compilers, that will need to be rewritten.
+**FFI**
+
+First, there are FFI bindings to a very small subset of GLFW (in `glfw-import.sml`) and OpenGL 3 (in `gles3-import.sml`). 
+
+As there's no standardised FFI across Standard ML compilers, that will need to be rewritten.
+
+**Syntax extensions**
 
 Secondly, `game-init.sml` and `game-draw.sml` both use a syntax extension supported at least by MLton and SML/NJ.
 
@@ -53,4 +59,10 @@ There are only two uses of this syntax extension across the whole project.
 
 These uses can be rewritten using the `Vector.fromList` function (`Vector.fromList [my, vector, elements]`) but I didn't see a reason to avoid it.
 
-There is a third reason that limits the portability of the code here, which is the use of the `Real32.real` type (the 32-bit `float` type in C). This just specifies the number of bits used by the type. OpenGL typically uses 32-bit floats, but MLton's `real` type defaults to 64-bit (the `double` type in C). The exact C type represented by a `real` might vary by the Standard ML compiler, but I wasn't planning on using a different compiler anyway.
+**MLton-exclusive types**
+
+There is a third reason that limits the portability of the code here, which is the use of the `Real32.real` type (the 32-bit `float` type in C). 
+
+This just specifies the number of bits used by the type. OpenGL typically uses 32-bit floats, but MLton's `real` type defaults to 64-bit (the `double` type in C). 
+
+The exact C type represented by a `real` might vary by the Standard ML compiler used, but I wasn't planning on using a different compiler anyway.
