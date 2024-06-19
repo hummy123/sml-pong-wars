@@ -78,7 +78,7 @@ struct
       val _ = Gles3.bindBuffer nightVertexBuffer
       val _ =
         Gles3.bufferData
-          (darkBlocks, Vector.length lightBlocks, Gles3.DYNAMIC_DRAW ())
+          (darkBlocks, Vector.length darkBlocks, Gles3.DYNAMIC_DRAW ())
       val _ = Gles3.vertexAttribPointer (0, 2)
       val _ = Gles3.enableVertexAttribArray 0
       val nightProgram = #nightProgram game
@@ -139,7 +139,7 @@ struct
         val _ = Gles3.enableVertexAttribArray 0
         val ballUniformLocation = Gles3.getUniformLocation (ballProgram, "col")
         val _ = Gles3.useProgram ballProgram
-        val _ = Gles3.uniform4f (ballUniformLocation, 0.0, 0.0, 0.0, 1.0)
+        val _ = Gles3.uniform4f (ballUniformLocation, nr, ng, nb, 1.0)
         val _ = Gles3.drawArrays
           (Gles3.TRIANGLE_FAN (), 0, Vector.length dayVertexData div 2)
 
@@ -149,7 +149,7 @@ struct
             , Vector.length dayVertexData
             , Gles3.DYNAMIC_DRAW ()
             )
-        val _ = Gles3.uniform4f (ballUniformLocation, 0.0, 0.0, 0.0, 1.0)
+        val _ = Gles3.uniform4f (ballUniformLocation, dr, dg, db, 1.0)
         val _ = Gles3.drawArrays
           (Gles3.TRIANGLE_FAN (), 0, Vector.length nightVertexData div 2)
       in
