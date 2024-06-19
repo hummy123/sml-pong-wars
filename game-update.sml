@@ -82,14 +82,26 @@ struct
         val isInVerticalRange =
           isBetween (blockStartY, ballStartY, ballEndY, blockEndY)
       in
-        if ballEndX = blockStartX andalso isInVerticalRange then
-          BALL_ON_LEFT_SIDE
-        else if ballStartX = blockEndX andalso isInVerticalRange then
-          BALL_ON_RIGHT_SIDE
-        else if ballEndY = blockStartY andalso isInHorizontalRange then
-          BALL_ON_TOP_SIDE
-        else if ballStartY = blockEndY andalso isInHorizontalRange then
-          BALL_ON_BOTTOM_SIDE
+        if isInHorizontalRange andalso isInVerticalRange then
+          (* Collided; check which side next. *)
+          let
+            val (xSide, xAmt) =
+              if abs (ballStartX - blockEndX) < abs (ballEndX - blockStartX) then
+                (BALL_ON_LEFT_SIDE, abs (ballStartX - blockEndX))
+              else
+                (BALL_ON_RIGHT_SIDE, abs (ballEndX - blockStartX))
+
+            val (ySide, yAmt) =
+              if abs (ballStartY - blockEndY) < abs (ballEndY - blockStartY) then
+                (BALL_ON_TOP_SIDE, abs (ballStartY - blockEndY))
+              else
+                (BALL_ON_BOTTOM_SIDE, abs (ballEndY - blockStartY))
+
+
+          in
+            if xAmt < yAmt then xSide else ySide
+          end
+
         else
           NO_COLLIDE
       end
@@ -97,7 +109,7 @@ struct
     fun hitLeftSideOfBlock (ball: ball, block: block) =
       let
         val newBlock = invertBlock block
-        val newBall = ballWithXMove (ball, ~5)
+        val newBall = ballWithXMove (ball, 5)
       in
         RESULT (newBall, newBlock)
       end
@@ -105,7 +117,7 @@ struct
     fun hitRightSideOfBLock (ball: ball, block: block) =
       let
         val newBlock = invertBlock block
-        val newBall = ballWithXMove (ball, 5)
+        val newBall = ballWithXMove (ball, ~5)
       in
         RESULT (newBall, newBlock)
       end
