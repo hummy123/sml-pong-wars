@@ -109,7 +109,7 @@ struct
     fun hitLeftSideOfBlock (ball: ball, block: block) =
       let
         val newBlock = invertBlock block
-        val newBall = ballWithXMove (ball, 5)
+        val newBall = ballWithXMove (ball, 7)
       in
         RESULT (newBall, newBlock)
       end
@@ -117,7 +117,7 @@ struct
     fun hitRightSideOfBLock (ball: ball, block: block) =
       let
         val newBlock = invertBlock block
-        val newBall = ballWithXMove (ball, ~5)
+        val newBall = ballWithXMove (ball, ~7)
       in
         RESULT (newBall, newBlock)
       end
@@ -125,7 +125,7 @@ struct
     fun hitTopSideOfBlock (ball: ball, block: block) =
       let
         val newBlock = invertBlock block
-        val newBall = ballWithYMove (ball, 5)
+        val newBall = ballWithYMove (ball, 7)
       in
         RESULT (newBall, newBlock)
       end
@@ -133,7 +133,7 @@ struct
     fun hitBottomSideOfBLock (ball: ball, block: block) =
       let
         val newBlock = invertBlock block
-        val newBall = ballWithYMove (ball, ~5)
+        val newBall = ballWithYMove (ball, ~7)
       in
         RESULT (newBall, newBlock)
       end
@@ -202,16 +202,16 @@ struct
   end
 
   fun checkLeftWallCollision (ball: ball) =
-    if #xPos ball = ~500 then ballWithXMove (ball, 5) else ball
+    if #xPos ball <= ~500 then ballWithXMove (ball, 7) else ball
 
   fun checkTopWallCollision (ball: ball) =
-    if #yPos ball = 500 then ballWithYMove (ball, ~5) else ball
+    if #yPos ball >= 500 then ballWithYMove (ball, ~7) else ball
 
   fun checkRightWallCollision (ball: ball) =
-    if #xPos ball + 50 = 500 then ballWithXMove (ball, ~5) else ball
+    if #xPos ball + 50 >= 500 then ballWithXMove (ball, ~7) else ball
 
   fun checkBottomWallCollision (ball: ball) =
-    if #yPos ball - 50 = ~500 then ballWithYMove (ball, 5) else ball
+    if #yPos ball - 50 <= ~500 then ballWithYMove (ball, 7) else ball
 
   fun checkWallCollisions (ball: ball) =
     let
