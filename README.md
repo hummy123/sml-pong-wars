@@ -8,7 +8,7 @@ It uses GLFW and OpenGL 3/3.0 ES, although it may work with older versions too.
 
 This is the first program I made on my journey of learning OpenGL as I decided it would be a small and fun project.
 
-This project uses the "functional core, imperative shell" pattern and the repository is meant to come with a short blog post introducing the pattern, but that hasn't yet been written.
+This project uses the "functional core, imperative shell" architecture, which is my preferred way to structure programs when possible. I wrote a blog post about it [here](https://hummy123.github.io/2024/06/20/Functional-Core,-Imperative-Shell.html).
 
 ### What's with all the C files?
 
